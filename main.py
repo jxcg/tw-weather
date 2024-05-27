@@ -62,15 +62,19 @@ def convert_weather_request(CITY: str):
 
 
 
-@app.route('/', methods=['GET'])
-def index():
+@app.route('/api/weather/<city>', methods=['GET'])
+def get_weather_api_data(city: str):
     try:
         x = weather_t_resource_request()
-        response = convert_weather_request("London")
+        response = convert_weather_request(city)
         return jsonify(response)
     except Exception as e:
         print(e)
         return jsonify({"error": "error occurred{e}"})
+    
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 
