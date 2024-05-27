@@ -57,8 +57,8 @@ def convert_weather_request(CITY: str):
                 "last_refreshed":dt.datetime.now(), "feels_like_celsius":m.floor(temp_celsius_feels_like), 
                 "feels_like_fahrenheit":m.floor(temp_fahrenheit_feels_like), "description":desc})
     
-    except Exception as e:
-        return response
+    except Exception:
+        return ({"Code":response['cod'], "Message":response['message']})
 
 
 
