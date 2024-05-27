@@ -65,7 +65,7 @@ def convert_weather_request(CITY: str):
 @app.route('/api/weather/<city>', methods=['GET'])
 def get_weather_api_data(city: str):
     try:
-        x = weather_t_resource_request()
+        weather_t_resource_request()
         response = convert_weather_request(city)
         return jsonify(response)
     except Exception as e:
