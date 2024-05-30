@@ -1,3 +1,28 @@
+let currentUnit = "celsius";
+let data = null;
+function toggleTempUnit() {
+    const changeUnitMessage = "Unit";
+    console.log(changeUnitMessage);
+    // toggle from celsius -> fahrenheit
+    if (currentUnit == 'celsius') {
+        console.log("Previous Unit: ",currentUnit)
+        currentUnit = "fahrenheit"
+        console.log("New Unit: ",currentUnit)
+        document.getElementById('changeUnit').innerText = changeUnitMessage + " °F"
+    }
+    else {
+        // toggle from fahrenheit -> celsius
+        console.log("Previous Unit: ",currentUnit)
+        currentUnit = 'celsius'
+        console.log("New Unit: ",currentUnit)
+        document.getElementById('changeUnit').innerText = changeUnitMessage + " °C"
+
+    }
+    if (data) {
+        displayWeatherData(data);
+    }
+}
+
 async function fetchData(city) {
     searchForm = city
     cityWithoutProperty = "";
@@ -13,7 +38,7 @@ async function fetchData(city) {
         // response shows up when the user does not enter a city, throwing a 404 response
         if (!response.ok) {
             document.getElementById('cityName').textContent = `Please enter a city`
-            document.getElementById('weatherCelsius').innerText = "";
+            document.getElementById('mainTemp').innerText = "";
             throw new Error("Could not fetch resource :(");
         }
         const data = await response.json();
@@ -36,15 +61,6 @@ async function fetchData(city) {
     }
 }
 
-function toggleButtonVisibility() {
-    // get button
-    let button = document.getElementById('changeUnit');
-    let currentDisplaySetting = button.style.display;
-    console.log(currentDisplaySetting);
-
-}
-
-
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -56,18 +72,19 @@ function removeCharacter(originalCityWithPlace) {
 
 const input = document.getElementById('citySearch');
 
+document.getElementById('changeUnit').addEventListener('click', toggleTempUnit);
+
 document.getElementById('searchButton').addEventListener('click', handleSearch);
 document.getElementById('citySearch').addEventListener('keypress', function(e) {
     if (e.key==='Enter') {
         e.preventDefault();
         handleSearch();
-        toggleButtonVisibility();
     }
 });
 
 async function handleSearch() {
         const city = document.getElementById('citySearch').value;
-        const data = await fetchData(city);
+        data = await fetchData(city);
         console.log(data);
         if (data.error == true) {
             console.log("Not displaying")
@@ -79,8 +96,16 @@ async function handleSearch() {
 };
 
 function displayWeatherData(data) {
-    document.getElementById('weatherCelsius').innerText = "Current Temperature: " + data.celsius + '°C';
+    if (currentUnit == "celsius") {
+        document.getElementById('mainTemp').innerText = "Current Temperature: " + data.celsius + '°C';
+    }
+    if (currentUnit == "fahrenheit") {
+        document.getElementById('mainTemp').innerText = "Current Temperature: " + data.fahrenheit + '°F';
+
+        
+    }
 }
+
 
 
 
