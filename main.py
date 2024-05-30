@@ -38,14 +38,19 @@ def convert_weather_request(CITY: str):
         pressure = response["main"]["pressure"]
         wind_speed_metres_per_second = response["wind"]["speed"]
         wind_mph, wind_kph = convert_ms_units(wind_speed_metres_per_second)
-
-
         temp_celsius, temp_fahrenheit = k_to_c_f(temp_kelvin)
         temp_celsius_feels_like, temp_fahrenheit_feels_like = k_to_c_f(feels_like_kelvin)
         temp_max_celsius, temp_max_fahrenheit = k_to_c_f(max_kelvin)
         temp_min_celsius, temp_min_fahrenheit = k_to_c_f(min_kelvin)
+        try:
+            country = response["sys"]["country"]
+            print(country)
+        except:
+            print("Error fetching country")
+            country = CITY
 
         return ({"maximum_temp_f":m.floor(temp_max_fahrenheit), 
+                "country":country,
                 "minimum_temp_c": m.floor(temp_min_celsius), 
                 "minimum_temp_f": m.floor(temp_min_fahrenheit),
                 "maximum_temp_c":m.floor(temp_max_celsius),
