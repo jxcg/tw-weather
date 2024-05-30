@@ -29,6 +29,7 @@ async function fetchData(city) {
     try {
         city = city.toLowerCase();
         city = capitalizeFirstLetter(city);
+        // flask API
         const response = await fetch(`/api/weather/${city}`);
         console.log(response.error)
         if (city.includes(',')) {
@@ -46,7 +47,8 @@ async function fetchData(city) {
         // response shows up when the user enters a city, but it does not exist
         if ('Code' in data && 'Message' in data) {
             document.getElementById('cityName').textContent = `Weather for: "${searchForm}" could not be found`
-            return { error: true, message: `API Error: ${data.Code} - ${data.Message}` };
+            console.log( { error: true, message: `API Error: ${data.Code} - ${data.Message}` });
+            data = null;
         }
         else {
             console.log(data);
@@ -62,6 +64,7 @@ async function fetchData(city) {
 }
 
 function capitalizeFirstLetter(string) {
+    // capitalises the first letter, and constructs the rest of the word together
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
@@ -73,7 +76,6 @@ function removeCharacter(originalCityWithPlace) {
 const input = document.getElementById('citySearch');
 
 document.getElementById('changeUnit').addEventListener('click', toggleTempUnit);
-
 document.getElementById('searchButton').addEventListener('click', handleSearch);
 document.getElementById('citySearch').addEventListener('keypress', function(e) {
     if (e.key==='Enter') {
@@ -96,13 +98,12 @@ async function handleSearch() {
 };
 
 function displayWeatherData(data) {
+    
     if (currentUnit == "celsius") {
         document.getElementById('mainTemp').innerText = "Current Temperature: " + data.celsius + '°C';
     }
     if (currentUnit == "fahrenheit") {
         document.getElementById('mainTemp').innerText = "Current Temperature: " + data.fahrenheit + '°F';
-
-        
     }
 }
 
