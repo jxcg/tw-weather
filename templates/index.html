@@ -11,9 +11,19 @@
     <h2 id="cityName">Current City Name</h2>
     <input type="text" id="citySearch">
     <button type='button' id="searchButton">search</button>
-    <button type='button' id="changeUnit">Unit °C</button>
     <h3 id="mainTemp"></h3>
-    <div id="weatherMisc"></div>
+    <div id="weatherMiscBox">
+        <h4 id="weatherDesc"></h4> <!-- Feels Like -->
+        <h4 id="weatherWindSpeed"></h4>
+
+    </div>
+
+    <footer id="footer">
+        <p>Options</p>
+        <button type='button' id="changeUnit">Current Unit: °C</button>
+        <button type='button' id="changeSpeedUnit">Speed: mph</button>
+
+    </footer>
 </body>
 <script src="/static/script.js"></script>
 </html>

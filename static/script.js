@@ -1,26 +1,41 @@
-let currentUnit = "celsius";
+let currentUnit = {"unit":"celsius", "unitSymbol":"°C", "windUnit":"mph"};
+
 let data = null;
+
 function toggleTempUnit() {
-    const changeUnitMessage = "Unit";
+    const changeUnitMessage = "Current Unit:";
     console.log(changeUnitMessage);
     // toggle from celsius -> fahrenheit
-    if (currentUnit == 'celsius') {
-        console.log("Previous Unit: ",currentUnit)
-        currentUnit = "fahrenheit"
-        console.log("New Unit: ",currentUnit)
-        document.getElementById('changeUnit').innerText = changeUnitMessage + " °F"
+    if (currentUnit['unit'] == 'celsius') {
+        currentUnit['unit'] = "fahrenheit";
+        currentUnit['unitSymbol'] = '°F';
     }
     else {
         // toggle from fahrenheit -> celsius
-        console.log("Previous Unit: ",currentUnit)
-        currentUnit = 'celsius'
-        console.log("New Unit: ",currentUnit)
-        document.getElementById('changeUnit').innerText = changeUnitMessage + " °C"
+        currentUnit['unit'] = 'celsius';
+        currentUnit['unitSymbol'] = '°C';
 
     }
     if (data) {
         displayWeatherData(data);
     }
+    document.getElementById('changeUnit').innerText = changeUnitMessage + " " + currentUnit['unitSymbol'];
+
+}
+
+
+function toggleWindSpeedUnit() {
+    const changeUnitMessage = "Speed: ";
+    if (currentUnit['windUnit'] === "mph") {
+        currentUnit['windUnit'] = "kph"
+    }
+    else {
+        currentUnit['windUnit'] = "mph";
+    }
+    if (data) {
+        displayWeatherData(data);
+    }
+    document.getElementById('changeSpeedUnit').innerText = changeUnitMessage + " " + currentUnit['windUnit'];
 }
 
 async function fetchData(city) {
@@ -76,6 +91,7 @@ function removeCharacter(originalCityWithPlace) {
 const input = document.getElementById('citySearch');
 
 document.getElementById('changeUnit').addEventListener('click', toggleTempUnit);
+document.getElementById('changeSpeedUnit').addEventListener('click', toggleWindSpeedUnit);
 document.getElementById('searchButton').addEventListener('click', handleSearch);
 document.getElementById('citySearch').addEventListener('keypress', function(e) {
     if (e.key==='Enter') {
@@ -98,15 +114,25 @@ async function handleSearch() {
 };
 
 function displayWeatherData(data) {
-    
-    if (currentUnit == "celsius") {
-        document.getElementById('mainTemp').innerText = "Current Temperature: " + data.celsius + '°C';
+    if (currentUnit['unit'] === 'celsius') {
+        document.getElementById('mainTemp').innerText = "Current Temperature: " + data.celsius + currentUnit['unitSymbol'] + " (" + data.description + ")";
+        document.getElementById('weatherDesc').innerText = "Feels Like " + data.feels_like_celsius + currentUnit['unitSymbol'];;
+
     }
-    if (currentUnit == "fahrenheit") {
-        document.getElementById('mainTemp').innerText = "Current Temperature: " + data.fahrenheit + '°F';
+    if (currentUnit['unit'] === 'fahrenheit') {
+        document.getElementById('mainTemp').innerText = "Current Temperature: " + data.fahrenheit + currentUnit['unitSymbol'] + " (" + data.description + ")";
+        document.getElementById('weatherDesc').innerText = "Feels Like " + data.feels_like_fahrenheit + currentUnit['unitSymbol'];
     }
+
+    if (currentUnit['windUnit'] === 'mph') {
+        document.getElementById('weatherWindSpeed').innerText = "Wind Speed: " + data.wind_speed_mph + " " + currentUnit['windUnit']; 
+    }
+    if (currentUnit['windUnit'] === 'kph') {
+        document.getElementById('weatherWindSpeed').innerText = "Wind Speed: " + data.wind_speed_kph + " " + currentUnit['windUnit']; 
+    }
+
+
+
+
 }
-
-
-
 
