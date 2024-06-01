@@ -17,7 +17,7 @@ def weather_t_resource_request():
     response = requests.get(url).json()
     print(jsonify(response))
 
-def convert_ms_units(ms: float):
+def convert_ms_units(ms: float) -> float:
     mph = ms * 2.237
     kph = mph * 1.6
     return mph, kph
@@ -31,6 +31,7 @@ def convert_weather_request(CITY: str):
         max_kelvin = response["main"]["temp_max"]
         min_kelvin = response["main"]["temp_min"]
         feels_like_kelvin = response["main"]["feels_like"]
+        icon = response["weather"][0]["icon"]
         desc = response["weather"][0]["description"]
         sunrise_time = dt.datetime.fromtimestamp(response["sys"]["sunrise"] + response['timezone'])
         sunset_time = dt.datetime.fromtimestamp(response["sys"]["sunset"] + response['timezone'])
@@ -42,6 +43,7 @@ def convert_weather_request(CITY: str):
         temp_celsius_feels_like, temp_fahrenheit_feels_like = k_to_c_f(feels_like_kelvin)
         temp_max_celsius, temp_max_fahrenheit = k_to_c_f(max_kelvin)
         temp_min_celsius, temp_min_fahrenheit = k_to_c_f(min_kelvin)
+        forecast_time = response['dt']
         try:
             country = response["sys"]["country"]
             print(country)
@@ -51,6 +53,8 @@ def convert_weather_request(CITY: str):
 
         return ({"maximum_temp_f":m.floor(temp_max_fahrenheit), 
                 "country":country,
+                "icon":icon,
+                "forecast_time":forecast_time,
                 "minimum_temp_c": m.floor(temp_min_celsius), 
                 "minimum_temp_f": m.floor(temp_min_fahrenheit),
                 "maximum_temp_c":m.floor(temp_max_celsius),

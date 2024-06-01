@@ -1,6 +1,18 @@
 let currentUnit = {"unit":"celsius", "unitSymbol":"°C", "windUnit":"mph"};
-
+let dayDictionary ={"0":"Sunday","1":"Monday","2":"Tuesday"};
 let data = null;
+
+
+function getForecastTime(epochTime, timezoneDifference) {
+    // 1717272494, 3600 -> 1717272494+3600
+    // return when forecast created
+    localTime = epochTime + timezoneDifference;
+    console.log(localTime);
+    currentDate = new Date(localTime);
+    console.log(currentDate);
+
+
+}
 
 function toggleTempUnit() {
     const changeUnitMessage = "Current Unit:";
@@ -64,6 +76,7 @@ async function fetchData(city) {
             document.getElementById('cityName').textContent = `Weather for: "${searchForm}" could not be found`
             console.log( { error: true, message: `API Error: ${data.Code} - ${data.Message}` });
             data = null;
+
         }
         else {
             console.log(data);
@@ -114,25 +127,34 @@ async function handleSearch() {
 };
 
 function displayWeatherData(data) {
-    if (currentUnit['unit'] === 'celsius') {
-        document.getElementById('mainTemp').innerText = "Current Temperature: " + data.celsius + currentUnit['unitSymbol'] + " (" + data.description + ")";
-        document.getElementById('weatherDesc').innerText = "Feels Like " + data.feels_like_celsius + currentUnit['unitSymbol'];;
-
+    const currentWeatherCondition = data.icon;
+    const weatherIconURL = `https://openweathermap.org/img/wn/${currentWeatherCondition}.png`
+    switch(currentUnit['unit']) {
+        case 'fahrenheit': {
+            document.getElementById('mainTemp').innerText = "Current Temperature: " + data.fahrenheit + currentUnit['unitSymbol'] + 
+            " (" + data.description + ")";
+            document.getElementById('weatherDesc').innerText = "Feels Like " + data.feels_like_fahrenheit + currentUnit['unitSymbol']; 
+            break;  
+        }
+        default: {
+            document.getElementById('mainTemp').innerText = "Current Temperature: " + data.celsius + currentUnit['unitSymbol'] + 
+            " (" + data.description + ")";
+            document.getElementById('weatherDesc').innerText = "Feels Like " + data.feels_like_celsius + currentUnit['unitSymbol'];
+            break;
+        }
     }
-    if (currentUnit['unit'] === 'fahrenheit') {
-        document.getElementById('mainTemp').innerText = "Current Temperature: " + data.fahrenheit + currentUnit['unitSymbol'] + " (" + data.description + ")";
-        document.getElementById('weatherDesc').innerText = "Feels Like " + data.feels_like_fahrenheit + currentUnit['unitSymbol'];
+
+    switch (currentUnit['windUnit']) {
+        case 'kph': {
+            document.getElementById('weatherWindSpeed').innerText = "Wind Speed: " + data.wind_speed_kph + " " + currentUnit['windUnit'];
+            break; 
+        }
+        default: {
+            document.getElementById('weatherWindSpeed').innerText = "Wind Speed: " + data.wind_speed_mph + " " + currentUnit['windUnit'];
+            break; 
+        }
     }
-
-    if (currentUnit['windUnit'] === 'mph') {
-        document.getElementById('weatherWindSpeed').innerText = "Wind Speed: " + data.wind_speed_mph + " " + currentUnit['windUnit']; 
-    }
-    if (currentUnit['windUnit'] === 'kph') {
-        document.getElementById('weatherWindSpeed').innerText = "Wind Speed: " + data.wind_speed_kph + " " + currentUnit['windUnit']; 
-    }
-
-
-
-
+    document.getElementById('weatherIcon').style.display = 'block';
+    document.getElementById('weatherIcon').src = weatherIconURL;
 }
 

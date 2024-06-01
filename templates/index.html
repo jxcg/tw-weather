@@ -4,25 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Application</title>
-    <link rel stylesheet href="/static/style.css">
+    <link rel='stylesheet' href="/static/style.css">
 </head>
 <body>
     <h1>Weather Application</h1>
-    <h2 id="cityName">Current City Name</h2>
-    <input type="text" id="citySearch">
-    <button type='button' id="searchButton">search</button>
-    <h3 id="mainTemp"></h3>
+    <div id="userInput">
+        <h2 id="cityName">Current City Name</h2>
+        <p id="locationSpecificTime"></p>
+        <input type="text" id="citySearch">
+        <button type='button' id="searchButton">search</button>
+    </div>
+
+    <div id="mainWeatherDetails">
+        <h3 id="mainTemp"></h3>
+        <img hidden id="weatherIcon" alt="weather icon"></img>
+    </div>
     <div id="weatherMiscBox">
         <h4 id="weatherDesc"></h4> <!-- Feels Like -->
-        <h4 id="weatherWindSpeed"></h4>
+        <h4 id="weatherWindSpeed"></h4> <!-- Wind Speed -->
 
     </div>
 
     <footer id="footer">
-        <p>Options</p>
         <button type='button' id="changeUnit">Current Unit: °C</button>
         <button type='button' id="changeSpeedUnit">Speed: mph</button>
-
+        <span id="timestamp"></span>
     </footer>
 </body>
 <script src="/static/script.js"></script>

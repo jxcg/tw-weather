@@ -1,4 +1,21 @@
-footer {
-    font-family: Arial, Helvetica, sans-serif;
-    display:block
+#mainWeatherDetails {
+    display: flex;
+    align-items: center;
 }
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    padding: 5px;
+}
+#changeUnit, #changeSpeedUnit {
+    height: 30px;
+    margin-right: 10px;
+}
+
+
+
