@@ -1,33 +1,39 @@
 let currentUnit = {"unit":"celsius", "unitSymbol":"°C", "windUnit":"mph"};
-let dayDictionary ={"0":"Sunday","1":"Monday","2":"Tuesday"};
 let data = null;
 
 
 function getForecastTime(epochTime, timezoneDifference) {
     // 1717272494, 3600 -> 1717272494+3600
-    // return when forecast created
-    localTime = epochTime + timezoneDifference;
-    console.log(localTime);
-    currentDate = new Date(localTime);
-    console.log(currentDate);
+    // get location specific forecast time
+    timeAccountedForTimezoneMilli = epochTime + timezoneDifference * 1000;
+    currentTimeNew = new Date(timeAccountedForTimezoneMilli);
+    if (timezoneDifference/3600 > 0) {
+        return "Current Local Time: " + currentTimeNew.toUTCString() + "+" + timezoneDifference/3600;
+    }
+    return "Current Local Time: " + currentTimeNew.toUTCString() + timezoneDifference/3600;
 
 
 }
+
 
 function toggleTempUnit() {
     const changeUnitMessage = "Current Unit:";
     console.log(changeUnitMessage);
     // toggle from celsius -> fahrenheit
-    if (currentUnit['unit'] == 'celsius') {
-        currentUnit['unit'] = "fahrenheit";
-        currentUnit['unitSymbol'] = '°F';
-    }
-    else {
-        // toggle from fahrenheit -> celsius
-        currentUnit['unit'] = 'celsius';
-        currentUnit['unitSymbol'] = '°C';
 
+    switch (currentUnit['unit']) {
+        case 'celsius': {
+            currentUnit['unit'] = "fahrenheit";
+            currentUnit['unitSymbol'] = '°F';
+            break;
+        }
+        default: {
+            currentUnit['unit'] = 'celsius';
+            currentUnit['unitSymbol'] = '°C';
+
+        }
     }
+
     if (data) {
         displayWeatherData(data);
     }
@@ -129,6 +135,8 @@ async function handleSearch() {
 function displayWeatherData(data) {
     const currentWeatherCondition = data.icon;
     const weatherIconURL = `https://openweathermap.org/img/wn/${currentWeatherCondition}.png`
+    const localForecastTimeString = getForecastTime(Date.now(), data.timezone);
+    document.getElementById('timestamp').innerText = localForecastTimeString;
     switch(currentUnit['unit']) {
         case 'fahrenheit': {
             document.getElementById('mainTemp').innerText = "Current Temperature: " + data.fahrenheit + currentUnit['unitSymbol'] + 
