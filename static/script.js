@@ -11,8 +11,6 @@ function getForecastTime(epochTime, timezoneDifference) {
         return "Current Local Time: " + currentTimeNew.toUTCString() + "+" + timezoneDifference/3600;
     }
     return "Current Local Time: " + currentTimeNew.toUTCString() + timezoneDifference/3600;
-
-
 }
 
 
