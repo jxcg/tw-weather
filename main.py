@@ -16,6 +16,7 @@ def weather_t_resource_request():
     url = BASE_URL + "appid=" + API_KEY + "&q=" + "London"
     response = requests.get(url).json()
     print(jsonify(response))
+    return jsonify(response)
 
 def convert_ms_units(ms: float) -> float:
     mph = ms * 2.237
@@ -33,8 +34,8 @@ def convert_weather_request(CITY: str):
         feels_like_kelvin = response["main"]["feels_like"]
         icon = response["weather"][0]["icon"]
         desc = response["weather"][0]["description"]
-        sunrise_time = dt.datetime.fromtimestamp(response["sys"]["sunrise"] + response['timezone'])
-        sunset_time = dt.datetime.fromtimestamp(response["sys"]["sunset"] + response['timezone'])
+        sunrise_time = response["sys"]["sunrise"]
+        sunset_time = response["sys"]["sunset"]
         humidity = response["main"]["humidity"]
         pressure = response["main"]["pressure"]
         wind_speed_metres_per_second = response["wind"]["speed"]
