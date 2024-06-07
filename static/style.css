@@ -1,3 +1,14 @@
+.header {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-large;
+}
+
+#cityName {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+
+}
+
 #mainWeatherDetails {
     display: flex;
     align-items: center;
@@ -12,7 +23,8 @@
     display: flex;
     padding: 5px;
 }
-#changeUnit, #changeSpeedUnit {
+
+#changeUnit, #changeSpeedUnit, #changeTimeFormat {
     height: 30px;
     margin-right: 10px;
 }

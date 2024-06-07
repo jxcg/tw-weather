@@ -1,22 +1,41 @@
-let currentUnit = {'unit':'celsius', 'unitSymbol':'°C', 'windUnit':'mph'};
+let currentUnit = {'unit':'celsius', 'unitSymbol':'°C', 'windUnit':'mph', 'timeFormat':'24'};
 let data = null;
 searchAndUnits();
 
-function getForecastTime(epochTime, timezoneDifference, location) {
+function getForecastTime(epochTime, timezoneDifference, cityLocation, location) {
     // 1717272494, 3600 -> 1717272494+3600
     // get location specific forecast time
     timeAccountedForTimezoneMilli = epochTime + timezoneDifference * 1000;
     currentTimeNew = new Date(timeAccountedForTimezoneMilli);
-    console.log(timezoneDifference)
-    //return timezoneDifference/3600 >= 0 ? 'Current Local Time: ' + currentTimeNew.toUTCString() + '+' + timezoneDifference/3600 
-    //: 'Current Local Time: ' + currentTimeNew.toUTCString() + timezoneDifference/3600;
-    return timezoneDifference/3600 >= 0 ? `Current Time in ${location} is ${currentTimeNew.toUTCString()}+${timezoneDifference/3600}` :
-    `Current Time in ${location} is ${currentTimeNew.toUTCString()}${timezoneDifference/3600}`
-
+    cityLocation = capitalizeFirstLetter(cityLocation);
+    [cityLocation] = cityLocation.split(',');
+    return timezoneDifference/3600 >=0 ? `Current Time in ${cityLocation}, ${location} is ${formatTime(currentTimeNew)} GMT+${timezoneDifference/3600}` : `Current Time in ${cityLocation}, ${location} is ${formatTime(currentTimeNew)} GMT${timezoneDifference/3600}`
 }
 
 
-function padTime(time) {
+function formatTime(date) {
+    switch (currentUnit['timeFormat']) {
+        case '12': {
+            let hours = date.getUTCHours();
+            let minutes = date.getUTCMinutes();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0'+ minutes : minutes;
+            let strTime = hours + ':' + minutes + ' ' + ampm;
+        
+            return strTime;
+        }
+        default: {
+            let hours = date.getUTCHours();
+            let minutes = date.getUTCMinutes();
+            minutes = minutes < 10 ? '0'+ minutes : minutes;
+            return (hours + ':' + minutes);
+        }
+        }
+    }
+
+function padTime(time) { // adds zero to beginning of time
     // is time less than 10? true; add zero to time, else return time
     return time < 10 ? '0' + time : time;
 }
@@ -26,8 +45,21 @@ function convertEpochIntoPureTime(epochTime, timezoneDifference) {
     epochTime *=1000;
     timeAccountedForTimezoneMilli = epochTime + timezoneDifference * 1000;
     let date = new Date(timeAccountedForTimezoneMilli);
-    return padTime(date.getUTCHours()) + ':' + padTime(date.getUTCMinutes());
-
+    let currentHour = date.getUTCHours();
+    switch (currentUnit['timeFormat']) {
+        case '12': {
+            if (currentHour > 11) { // PM
+                currentHour = currentHour % 12
+                currentHour = currentHour ? currentHour : 12;
+                return currentHour + ':' + padTime(date.getUTCMinutes()) + " PM";
+            }
+            // AM
+            return currentHour + ':' + padTime(date.getUTCMinutes()) + " AM";
+        }
+        default: {
+            return padTime(date.getUTCHours()) + ':' + padTime(date.getUTCMinutes());
+        }
+    }
 }
 
 
@@ -51,7 +83,23 @@ function toggleTempUnit() {
         displayWeatherData(data);
     }
     document.getElementById('changeUnit').innerText = 'Current Unit: ' + currentUnit['unitSymbol'];
+}
 
+function toggleTimeUnit() {
+    switch (currentUnit['timeFormat']) {
+        case '24': {
+            currentUnit['timeFormat'] = '12';
+            break;
+        }
+        default: {
+            currentUnit['timeFormat'] = '24';
+            break;
+        }
+    }
+    if (data) {
+        displayWeatherData(data);
+    }
+    document.getElementById('changeTimeFormat').innerText = `Format: ${currentUnit['timeFormat']} Hour`;
 }
 
 // toggle speeds
@@ -116,7 +164,7 @@ async function fetchData(city) {
 
 function capitalizeFirstLetter(string) {
     // capitalises the first letter, and constructs the rest of the word together
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
 function removeCharacter(originalCityWithPlace) {
@@ -126,6 +174,7 @@ function removeCharacter(originalCityWithPlace) {
 function searchAndUnits() {
     document.getElementById('changeUnit').addEventListener('click', toggleTempUnit);
     document.getElementById('changeSpeedUnit').addEventListener('click', toggleWindSpeedUnit);
+    document.getElementById('changeTimeFormat').addEventListener('click', toggleTimeUnit)
     document.getElementById('searchButton').addEventListener('click', handleSearch);
     document.getElementById('citySearch').addEventListener('keypress', function(e) {
         if (e.key==='Enter') {
@@ -169,7 +218,7 @@ async function handleSearch() {
                 console.log('Not displaying')
             }
             else {
-                displayWeatherData(data);
+                displayWeatherData(data, city);
             }
         }
         catch (error) {
@@ -180,8 +229,8 @@ async function handleSearch() {
 };
 
 
-function displayWeatherData(data) {
-    const localForecastTimeString = getForecastTime(Date.now(), data.timezone, data.country);
+function displayWeatherData(data, cityLocation) {
+    const localForecastTimeString = getForecastTime(Date.now(), data.timezone, cityLocation, data.country);
     document.getElementById('timestamp').innerText = localForecastTimeString;
     switch(currentUnit['unit']) {
         case 'fahrenheit': {
