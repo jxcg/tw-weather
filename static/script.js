@@ -80,7 +80,8 @@ function toggleTempUnit() {
     }
 
     if (data) {
-        displayWeatherData(data);
+        const city = document.getElementById('citySearch').value;
+        displayWeatherData(data, city);
     }
     document.getElementById('changeUnit').innerText = 'Current Unit: ' + currentUnit['unitSymbol'];
 }
@@ -97,7 +98,8 @@ function toggleTimeUnit() {
         }
     }
     if (data) {
-        displayWeatherData(data);
+        const city = document.getElementById('citySearch').value;
+        displayWeatherData(data,city);
     }
     document.getElementById('changeTimeFormat').innerText = `Format: ${currentUnit['timeFormat']} Hour`;
 }
@@ -116,7 +118,8 @@ function toggleWindSpeedUnit() {
         }
     }
     if (data) {
-        displayWeatherData(data);
+        const city = document.getElementById('citySearch').value;
+        displayWeatherData(data, city);
     }
     document.getElementById('changeSpeedUnit').innerText = 'Speed: ' + currentUnit['windUnit'];
 }
@@ -210,21 +213,21 @@ function loadMiscData() {
 
 
 async function handleSearch() {
-        const city = document.getElementById('citySearch').value;
-        data = await fetchData(city);
-        console.log(data);
-        try {
-            if (data.error == true) {
-                console.log('Not displaying')
-            }
-            else {
-                displayWeatherData(data, city);
-            }
+    const city = document.getElementById('citySearch').value;
+    data = await fetchData(city);
+    console.log(data);
+    try {
+        if (data.error == true) {
+            console.log('Not displaying')
         }
-        catch (error) {
-            console.log("This place probably does not exist on the API db")
-            console.log(error)
+        else {
+            displayWeatherData(data, city);
         }
+    }
+    catch (error) {
+        console.log("This place probably does not exist on the API db")
+        console.log(error)
+    }
         
 };
 
