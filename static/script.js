@@ -29,7 +29,8 @@ function formatTime(date) {
         default: {
             let hours = date.getUTCHours();
             let minutes = date.getUTCMinutes();
-            minutes = minutes < 10 ? '0'+ minutes : minutes;
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
             return (hours + ':' + minutes);
         }
         }
@@ -167,7 +168,12 @@ async function fetchData(city) {
 
 function capitalizeFirstLetter(string) {
     // capitalises the first letter, and constructs the rest of the word together
-    return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    try {
+        return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
+    catch (error) {
+        console.log(error);
+    }
 }
 
 function removeCharacter(originalCityWithPlace) {
