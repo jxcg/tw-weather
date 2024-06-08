@@ -81,7 +81,7 @@ function toggleTempUnit() {
     }
 
     if (data) {
-        const city = document.getElementById('citySearch').value;
+        const city = data.name;
         displayWeatherData(data, city);
     }
     document.getElementById('changeUnit').innerText = 'Current Unit: ' + currentUnit['unitSymbol'];
@@ -99,7 +99,7 @@ function toggleTimeUnit() {
         }
     }
     if (data) {
-        const city = document.getElementById('citySearch').value;
+        const city = data.name;
         displayWeatherData(data,city);
     }
     document.getElementById('changeTimeFormat').innerText = `Format: ${currentUnit['timeFormat']} Hour`;
@@ -119,7 +119,7 @@ function toggleWindSpeedUnit() {
         }
     }
     if (data) {
-        const city = document.getElementById('citySearch').value;
+        const city = data.name;
         displayWeatherData(data, city);
     }
     document.getElementById('changeSpeedUnit').innerText = 'Speed: ' + currentUnit['windUnit'];
@@ -160,7 +160,7 @@ async function fetchData(city) {
         }
         else {
             console.log(data);
-            document.getElementById('cityName').textContent = `${city}, ${data.country}`
+            document.getElementById('cityName').textContent = `${capitalizeFirstLetter(data.description)}`
             return data;
         }
 
@@ -212,7 +212,7 @@ function loadMiscData() {
     }
     document.getElementById('weatherIcon').style.display = 'block';
     try {
-        document.getElementById('weathermisc').style.display = 'block';
+        document.getElementById('weatherMiscBox').style.display = 'block';
         document.getElementById('sunrise').innerText = 'Sunrise: ' + convertEpochIntoPureTime(data.sunrise, data.timezone);
         document.getElementById('sunset').innerText = 'Sunset: ' + convertEpochIntoPureTime(data.sunset, data.timezone);
         document.getElementById('pressure').innerText = 'Current Pressure: ' + data.pressure + ' hPa';
@@ -248,17 +248,18 @@ function displayWeatherData(data, cityLocation) {
     document.getElementById('timestamp').innerText = localForecastTimeString;
     [cityLocation] = cityLocation.split(',');
     document.getElementById('citySearch').value = capitalizeFirstLetter(cityLocation) + ", " + data.country;
+    document.getElementById('weatherMiscBox').style.display = "block";
     switch(currentUnit['unit']) {
         case 'fahrenheit': {
             document.getElementById('mainTemp').innerText = data.fahrenheit + currentUnit['unitSymbol'];
-            document.getElementById('weatherDesc').innerText = 'Feels Like ' + data.feels_like_fahrenheit + currentUnit['unitSymbol']; 
+            document.getElementById('cityName').textContent = `Feels Like ${data.feels_like_fahrenheit} ${currentUnit['unitSymbol']} ${capitalizeFirstLetter(data.description)}`
             document.getElementById('minTemp').innerText = 'Low: ' + data.minimum_temp_f + currentUnit['unitSymbol'];
             document.getElementById('maxTemp').innerText = 'High: ' + data.maximum_temp_f + currentUnit['unitSymbol'];
             break;  
         }
         default: {
+            document.getElementById('cityName').textContent = `Feels Like ${data.feels_like_celsius}${currentUnit['unitSymbol']} - ${capitalizeFirstLetter(data.description)}`
             document.getElementById('mainTemp').innerText = data.celsius + currentUnit['unitSymbol'];
-            document.getElementById('weatherDesc').innerText = 'Feels Like ' + data.feels_like_celsius + currentUnit['unitSymbol'];
             document.getElementById('minTemp').innerText = 'Low: ' + data.minimum_temp_c + currentUnit['unitSymbol'];
             document.getElementById('maxTemp').innerText = 'High: ' + data.maximum_temp_c + currentUnit['unitSymbol'];
             break;

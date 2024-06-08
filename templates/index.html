@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Application</title>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:100' rel='stylesheet'>
     <link rel='stylesheet' href="/static/style.css">
 </head>
 <body>
@@ -20,23 +22,18 @@
 
     <div id="mainWeatherDetails">
         <h2 id="mainTemp"></h2>
-
     </div>
 
 
-    <div id="weatherMiscBox">
-        <h3 id="weatherDesc"></h3> <!-- Feels Like -->
+    <div hidden id="weatherMiscBox">
         <h3 id="weatherWindSpeed"></h3> <!-- Wind Speed -->
-        <ul hidden id="weathermisc">
-            <li id="minTemp"></li>
-            <li id="maxTemp"></li>
-            <li id="sunrise"></li>
-            <li id="sunset"></li>
-            <li id="pressure"></li>
-        </ul>
-
-
+            <p id="minTemp"></p>
+            <p id="maxTemp"></p>
+            <p id="sunrise"></p>
+            <p id="sunset"></p>
+            <p id="pressure"></p>
     </div>
+
 
     <footer id="footer">
         <button type='button' id="changeUnit">Current Unit: °C</button>

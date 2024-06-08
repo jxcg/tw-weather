@@ -20,7 +20,7 @@ def weather_t_resource_request():
     url = BASE_URL + "appid=" + API_KEY + "&q=" + "London"
     response = requests.get(url).json()
     print(jsonify(response))
-    
+
 def convert_ms_units(ms: float) -> float:
     mph = ms * 2.237
     kph = mph * 1.6
@@ -69,6 +69,7 @@ def convert_weather_request(CITY: str):
                 "humidity":humidity, "pressure":pressure,
                 "wind_speed_mph":str(round(wind_mph,1)), "wind_speed_kph":str(round(wind_kph,1)),
                 "last_refreshed":dt.datetime.now(), "feels_like_celsius":m.floor(temp_celsius_feels_like), 
+                "name":response["name"],
                 "feels_like_fahrenheit":m.floor(temp_fahrenheit_feels_like), "description":desc})
     
     except Exception:

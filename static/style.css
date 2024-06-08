@@ -9,13 +9,14 @@
 }
 
 input[type=text] {
+    font-family: Noto Sans, Helvetica, sans-serif;
     font-size: larger;
     width: 70%;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
     border: 2px solid #ffdcdc52;
-    border-radius: 10px;
+    border-radius: 15px;
     transition: width 0.25s;
     background: transparent;
     color: #ffdcdcaa;
@@ -45,7 +46,7 @@ input[type=text]:focus {
 
 
 #cityName {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Noto Sans, Helvetica, sans-serif;
     font-size: larger;
     color: rgba(255, 255, 255, 0.705);
 }
@@ -55,8 +56,20 @@ input[type=text]:focus {
     width: 50%;
     text-align: center;
     color: rgba(255, 255, 255, 0.805);
+    font-family: Noto Sans, Helvetica, sans-serif;
+    font-size: 64px;
+    font-weight: 100;
 }
 
+#weatherMiscBox {
+    background-color: wheat;
+    margin: auto;
+    width: 50%; 
+    padding: 15px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 10px 10px 10px rgba(255, 209, 209, 0.194);
+}
 
 #footer {
     position: absolute;
@@ -72,6 +85,8 @@ input[type=text]:focus {
     height: 30px;
     margin-right: 10px;
 }
+
+
 
 
 
@@ -93,3 +108,8 @@ body {
 		background-position: 0% 50%;
 	}
 }
+
+ul {
+    list-style-type: none;
+}
+  
