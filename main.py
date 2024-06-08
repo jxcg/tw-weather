@@ -20,8 +20,7 @@ def weather_t_resource_request():
     url = BASE_URL + "appid=" + API_KEY + "&q=" + "London"
     response = requests.get(url).json()
     print(jsonify(response))
-    return jsonify(response)
-
+    
 def convert_ms_units(ms: float) -> float:
     mph = ms * 2.237
     kph = mph * 1.6
@@ -93,8 +92,7 @@ def index():
 
 if __name__ == "__main__":
     config = load_config('development')
+    # define these within your config.yaml
     BASE_URL = config['BASE_URL']
     API_KEY = config['API_KEY']
-    print(config)
     app.run(port=config['PORT'], debug=config['DEBUG'])
-    

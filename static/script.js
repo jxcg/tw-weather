@@ -142,13 +142,19 @@ async function fetchData(city) {
         if (!response.ok) {
             document.getElementById('cityName').textContent = `Please enter a city`
             document.getElementById('mainTemp').innerText = '';
+            document.getElementById('weatherIcon').style.display = "none";
+            document.getElementById('mainTemp').innerText = "";
             throw new Error('Could not fetch resource :(');
         }
         const data = await response.json();
+        console.log(data)
 
         // response shows up when the user enters a city, but it does not exist
         if ('Code' in data && 'Message' in data) {
-            document.getElementById('cityName').textContent = `Weather for: '${searchForm}' could not be found`
+            document.getElementById('cityName').textContent = `Weather for: '${searchForm}' could not be found :(`
+            document.getElementById('weatherIcon').style.display = "none";
+            document.getElementById('mainTemp').innerText = "";
+
             console.log( { error: true, message: `API Error: ${data.Code} - ${data.Message}` });
             data = null;
 
@@ -156,6 +162,7 @@ async function fetchData(city) {
         else {
             console.log(data);
             document.getElementById('cityName').textContent = `Weather for: ${city}, ${data.country}`
+            //document.getElementById('citySearch').textContent = city + ", " + data.country
             return data;
         }
 
@@ -197,7 +204,7 @@ function searchAndUnits() {
 function loadMiscData() {
     try {
         const currentWeatherCondition = data.icon;
-        const weatherIconURL = `https://openweathermap.org/img/wn/${currentWeatherCondition}.png`
+        const weatherIconURL = `https://openweathermap.org/img/wn/${currentWeatherCondition}@2x.png`
         document.getElementById('weatherIcon').src = weatherIconURL;
 
 
@@ -243,16 +250,14 @@ function displayWeatherData(data, cityLocation) {
     document.getElementById('timestamp').innerText = localForecastTimeString;
     switch(currentUnit['unit']) {
         case 'fahrenheit': {
-            document.getElementById('mainTemp').innerText = 'Current Temperature: ' + data.fahrenheit + currentUnit['unitSymbol'] + 
-            ' (' + data.description + ')';
+            document.getElementById('mainTemp').innerText = data.fahrenheit + currentUnit['unitSymbol'];
             document.getElementById('weatherDesc').innerText = 'Feels Like ' + data.feels_like_fahrenheit + currentUnit['unitSymbol']; 
             document.getElementById('minTemp').innerText = 'Low: ' + data.minimum_temp_f + currentUnit['unitSymbol'];
             document.getElementById('maxTemp').innerText = 'High: ' + data.maximum_temp_f + currentUnit['unitSymbol'];
             break;  
         }
         default: {
-            document.getElementById('mainTemp').innerText = 'Current Temperature: ' + data.celsius + currentUnit['unitSymbol'] + 
-            ' (' + data.description + ')';
+            document.getElementById('mainTemp').innerText = data.celsius + currentUnit['unitSymbol'];
             document.getElementById('weatherDesc').innerText = 'Feels Like ' + data.feels_like_celsius + currentUnit['unitSymbol'];
             document.getElementById('minTemp').innerText = 'Low: ' + data.minimum_temp_c + currentUnit['unitSymbol'];
             document.getElementById('maxTemp').innerText = 'High: ' + data.maximum_temp_c + currentUnit['unitSymbol'];

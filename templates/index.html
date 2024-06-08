@@ -8,16 +8,20 @@
 </head>
 <body>
     <div class="userInput">
-        <h1 class="header">Weather Application</h1>
-        <h2 id="cityName"></h2>
-        <input type="text" id="citySearch">
-        <button type='button' id="searchButton">search</button>
+        <input type="text" id="citySearch" placeholder="Search for a City">
+        <button hidden type='button' id="searchButton">search</button>
+        <div id="cityContainer">
+            <h2 id="cityName"></h2>
+            <img hidden id="weatherIcon" alt="Weather Icon"></img>
+        </div>
     </div>
 
     <div id="mainWeatherDetails">
         <h2 id="mainTemp"></h2>
-        <img hidden id="weatherIcon" alt="Weather Icon"></img>
+
     </div>
+
+
     <div id="weatherMiscBox">
         <h3 id="weatherDesc"></h3> <!-- Feels Like -->
         <h3 id="weatherWindSpeed"></h3> <!-- Wind Speed -->
