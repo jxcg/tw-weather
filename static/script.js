@@ -154,15 +154,13 @@ async function fetchData(city) {
             document.getElementById('cityName').textContent = `Weather for: '${searchForm}' could not be found :(`
             document.getElementById('weatherIcon').style.display = "none";
             document.getElementById('mainTemp').innerText = "";
-
             console.log( { error: true, message: `API Error: ${data.Code} - ${data.Message}` });
             data = null;
 
         }
         else {
             console.log(data);
-            document.getElementById('cityName').textContent = `Weather for: ${city}, ${data.country}`
-            //document.getElementById('citySearch').textContent = city + ", " + data.country
+            document.getElementById('cityName').textContent = `${city}, ${data.country}`
             return data;
         }
 
@@ -204,7 +202,7 @@ function searchAndUnits() {
 function loadMiscData() {
     try {
         const currentWeatherCondition = data.icon;
-        const weatherIconURL = `https://openweathermap.org/img/wn/${currentWeatherCondition}@2x.png`
+        const weatherIconURL = `https://openweathermap.org/img/wn/${currentWeatherCondition}@4x.png`
         document.getElementById('weatherIcon').src = weatherIconURL;
 
 
@@ -248,6 +246,8 @@ async function handleSearch() {
 function displayWeatherData(data, cityLocation) {
     const localForecastTimeString = getForecastTime(Date.now(), data.timezone, cityLocation, data.country);
     document.getElementById('timestamp').innerText = localForecastTimeString;
+    [cityLocation] = cityLocation.split(',');
+    document.getElementById('citySearch').value = capitalizeFirstLetter(cityLocation) + ", " + data.country;
     switch(currentUnit['unit']) {
         case 'fahrenheit': {
             document.getElementById('mainTemp').innerText = data.fahrenheit + currentUnit['unitSymbol'];

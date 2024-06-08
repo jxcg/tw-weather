@@ -10,7 +10,6 @@
 
 input[type=text] {
     font-size: larger;
-    font-weight: bold;
     width: 70%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -47,12 +46,14 @@ input[type=text]:focus {
 #cityName {
     font-family: Arial, Helvetica, sans-serif;
     font-size: larger;
+    color: rgba(255, 255, 255, 0.705);
 }
 
-#mainWeatherDetails {
+#mainTemp {
     margin: auto;
     width: 50%;
     text-align: center;
+    color: rgba(255, 255, 255, 0.805);
 }
 
 
