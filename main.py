@@ -1,6 +1,6 @@
 import requests
 import math as m
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, jsonify
 import datetime as dt
 BASE_URL = 'http://api.openweathermap.org/data/2.5/weather?'
 API_KEY = open('api_key', 'r').read()
