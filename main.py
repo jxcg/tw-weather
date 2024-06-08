@@ -1,10 +1,14 @@
 import requests
 import math as m
+import yaml
 from flask import Flask, render_template, jsonify
 import datetime as dt
-BASE_URL = 'http://api.openweathermap.org/data/2.5/weather?'
-API_KEY = open('api_key', 'r').read()
 app = Flask(__name__)
+
+def load_config(env='development'):
+    with open('config.yaml', 'r') as f:
+        config = yaml.safe_load(f)
+    return config.get(env, config['default'])
 
 def k_to_c_f(k: float):
     c = k-273.15
@@ -72,7 +76,6 @@ def convert_weather_request(CITY: str):
         return ({"Code":response['cod'], "Message":response['message']})
 
 
-
 @app.route('/api/weather/<city>', methods=['GET'])
 def get_weather_api_data(city: str):
     try:
@@ -89,4 +92,9 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(port=5300, debug=True)
+    config = load_config('development')
+    BASE_URL = config['BASE_URL']
+    API_KEY = config['API_KEY']
+    print(config)
+    app.run(port=config['PORT'], debug=config['DEBUG'])
+    
