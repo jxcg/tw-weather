@@ -24,7 +24,7 @@ input[type=text] {
 input[type=text]:hover {
     border: 2px solid #ffdcdc80;
     color: #ffdcdcaa;
-    width: 100%;
+    width: 75%;
 
 }
 
@@ -33,6 +33,7 @@ input[type=text]:focus {
     border: 2px solid #ffdcdc80;
     color: #ffdcdcaa;
     outline: none;
+    width: 100%;
 
 }
 
