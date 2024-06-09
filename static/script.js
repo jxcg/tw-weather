@@ -140,7 +140,7 @@ async function fetchData(city) {
         console.log(response)
         // response shows up when the user does not enter a city, throwing a 404 response
         if (!response.ok) {
-            document.getElementById('cityName').textContent = `Please enter a city`
+            document.getElementById('cityWeatherDetails').textContent = `Please enter a city`
             document.getElementById('mainTemp').innerText = '';
             document.getElementById('weatherIcon').style.display = "none";
             document.getElementById('mainTemp').innerText = "";
@@ -151,7 +151,7 @@ async function fetchData(city) {
 
         // response shows up when the user enters a city, but it does not exist
         if ('Code' in data && 'Message' in data) {
-            document.getElementById('cityName').textContent = `Weather for: '${searchForm}' could not be found :(`
+            document.getElementById('cityWeatherDetails').textContent = `Weather for: '${searchForm}' could not be found :(`
             document.getElementById('weatherIcon').style.display = "none";
             document.getElementById('mainTemp').innerText = "";
             console.log( { error: true, message: `API Error: ${data.Code} - ${data.Message}` });
@@ -160,7 +160,7 @@ async function fetchData(city) {
         }
         else {
             console.log(data);
-            document.getElementById('cityName').textContent = `${capitalizeFirstLetter(data.description)}`
+            document.getElementById('cityWeatherDetails').textContent = `${capitalizeFirstLetter(data.description)}`
             return data;
         }
 
@@ -251,15 +251,15 @@ function displayWeatherData(data, cityLocation) {
     document.getElementById('weatherMiscBox').style.display = "block";
     switch(currentUnit['unit']) {
         case 'fahrenheit': {
-            document.getElementById('mainTemp').innerText = data.fahrenheit + currentUnit['unitSymbol'];
-            document.getElementById('cityName').textContent = `Feels Like ${data.feels_like_fahrenheit} ${currentUnit['unitSymbol']} ${capitalizeFirstLetter(data.description)}`
+            document.getElementById('mainTemp').innerText = `${data.fahrenheit} ${currentUnit['unitSymbol']}`;
+            document.getElementById('cityWeatherDetails').textContent = `Feels Like ${data.feels_like_fahrenheit} ${currentUnit['unitSymbol']} ${capitalizeFirstLetter(data.description)}`
             document.getElementById('minTemp').innerText = 'Low: ' + data.minimum_temp_f + currentUnit['unitSymbol'];
             document.getElementById('maxTemp').innerText = 'High: ' + data.maximum_temp_f + currentUnit['unitSymbol'];
             break;  
         }
         default: {
-            document.getElementById('cityName').textContent = `Feels Like ${data.feels_like_celsius}${currentUnit['unitSymbol']} - ${capitalizeFirstLetter(data.description)}`
-            document.getElementById('mainTemp').innerText = data.celsius + currentUnit['unitSymbol'];
+            document.getElementById('cityWeatherDetails').textContent = `Feels Like ${data.feels_like_celsius} ${currentUnit['unitSymbol']} - ${capitalizeFirstLetter(data.description)}`
+            document.getElementById('mainTemp').innerText = `${data.celsius} ${currentUnit['unitSymbol']}`;
             document.getElementById('minTemp').innerText = 'Low: ' + data.minimum_temp_c + currentUnit['unitSymbol'];
             document.getElementById('maxTemp').innerText = 'High: ' + data.maximum_temp_c + currentUnit['unitSymbol'];
             break;

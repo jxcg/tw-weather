@@ -11,32 +11,32 @@
 input[type=text] {
     font-family: Noto Sans, Helvetica, sans-serif;
     font-size: larger;
-    width: 70%;
+    width: 65%;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
     border: 2px solid #ffdcdc52;
-    border-radius: 15px;
-    transition: width 0.25s;
-    background: transparent;
+    border-radius: 16px;
+    transition: width 0.3s;
+    background: rgba(255, 255, 255, 0.152);
     color: #ffdcdcaa;
+    animation: glowGradient 5s infinite;
+
 }
 
 input[type=text]:hover {
-    border: 2px solid #ffdcdc80;
     color: #ffdcdcaa;
-    width: 75%;
-
+    width: 70%;
+    backdrop-filter: blur(7.5px);
 }
 
 
 input[type=text]:focus {
-    border: 2px solid #ffdcdc80;
     color: #ffdcdcaa;
     outline: none;
     width: 100%;
-
 }
+
 
 #cityContainer {
     display: flex;
@@ -45,11 +45,12 @@ input[type=text]:focus {
 }
 
 
-#cityName {
+#cityWeatherDetails {
     font-family: Noto Sans, Helvetica, sans-serif;
     font-size: larger;
     color: rgba(255, 255, 255, 0.705);
 }
+
 
 #mainTemp {
     margin: auto;
@@ -62,13 +63,45 @@ input[type=text]:focus {
 }
 
 #weatherMiscBox {
-    background-color: wheat;
+    background: rgba(255, 255, 255, 0.25);
+    width: 40%; 
+    padding: 10px;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.5px);
+    -webkit-backdrop-filter: blur(7.5px);
+    border: 1px solid rgba(255, 255, 255, 0.40);
     margin: auto;
-    width: 50%; 
-    padding: 15px;
     text-align: center;
-    border-radius: 15px;
-    box-shadow: 10px 10px 10px rgba(255, 209, 209, 0.194);
+    margin-top: 25px;   
+    animation: glowGradientBigBox 15s infinite;
+
+}
+
+#detailsText {
+    font-family: Noto Sans, Helvetica, sans-serif;;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: x-large;
+
+}
+
+
+#minTemp, #maxTemp {
+    display: inline-block;
+    width: 30%;
+    font-family: Noto Sans, Helvetica, sans-serif;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.70);
+    font-size: larger;
+}
+
+#sunrise, #sunset {
+    display: inline-block;
+    width: 30%;
+    font-family: Noto Sans, Helvetica, sans-serif;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.70);
+    font-size: larger;
 }
 
 #footer {
@@ -95,6 +128,16 @@ body {
 	background-size: 400% 400%;
 	animation: gradient 25s ease infinite;
 	height: 100vh;
+}
+
+@keyframes glowGradient {
+    50% {box-shadow: 10px 5px 30px rgba(151, 255, 236, 0.297);}
+}
+
+@keyframes glowGradientBigBox {
+    25% {
+        box-shadow: 10px 5px 30px rgba(116, 213, 255, 0.1);
+    }
 }
 
 @keyframes gradient {
