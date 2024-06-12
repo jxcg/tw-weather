@@ -18,6 +18,7 @@ input[type=text] {
     border: 2px solid #ffdcdc52;
     border-radius: 16px;
     transition: width 0.3s;
+    transition-timing-function: ease-out;
     background: rgba(255, 255, 255, 0.152);
     color: #ffdcdcaa;
     animation: glowGradient 5s infinite;
@@ -62,19 +63,31 @@ input[type=text]:focus {
     font-weight: 100;
 }
 
+#currentTime {
+    margin: auto;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.805);
+    font-family: Noto Sans, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 100;
+}
+
 #weatherMiscBox {
     background: rgba(255, 255, 255, 0.25);
     width: 40%; 
     padding: 10px;
     border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(7.5px);
-    -webkit-backdrop-filter: blur(7.5px);
-    border: 1px solid rgba(255, 255, 255, 0.40);
+    border: 2px solid rgba(255, 255, 255, 0.40);
     margin: auto;
     text-align: center;
     margin-top: 25px;   
-    animation: glowGradientBigBox 15s infinite;
+    transition: all 0.15s ease-out;
+}
+
+#weatherMiscBox:hover {
+    background: rgba(198, 255, 217, 0.25);
+    box-shadow: 5px 5px 30px rgba(193, 161, 255, 0.3);
 
 }
 
@@ -85,42 +98,54 @@ input[type=text]:focus {
 
 }
 
+hr {
+    border: 1px solid #ffdcdc16;
+    max-width: 100%;
+}
 
-#minTemp, #maxTemp {
+#minTemp, #maxTemp, #sunrise, #sunset  {
     display: inline-block;
     width: 30%;
+    text-align: center;
     font-family: Noto Sans, Helvetica, sans-serif;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.70);
     font-size: larger;
 }
 
-#sunrise, #sunset {
+#weatherWindSpeed, #pressure {
     display: inline-block;
-    width: 30%;
+    width: 40%;
     font-family: Noto Sans, Helvetica, sans-serif;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.70);
     font-size: larger;
-}
-
-#footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    justify-content: flex-start;
-    align-items: center;
-    display: flex;
-    padding: 5px;
 }
 
 #changeUnit, #changeSpeedUnit, #changeTimeFormat {
     height: 30px;
+    width: 120px;
     margin-right: 10px;
+    border: 1px solid #ffdcdc52;
+    background: rgba(255, 255, 255, 0.359);
+    border-radius: 10px;
+    transition: all 0.15s ease-out;
+    font-family: Noto Sans, Helvetica, sans-serif;
+}
+
+#changeUnit:hover, #changeSpeedUnit:hover, #changeTimeFormat:hover {
+    background: rgba(255, 255, 255, 0.359);
+    width: 150px;
 }
 
 
-
+#changeUnit:active, #changeSpeedUnit:active, #changeTimeFormat:active {
+    background: rgba(255, 255, 255, 0.500);
+    width: 160px;
+    font-family: Noto Sans, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+}
 
 
 body {
@@ -128,17 +153,26 @@ body {
 	background-size: 400% 400%;
 	animation: gradient 25s ease infinite;
 	height: 100vh;
+    overflow: hidden;
 }
+
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    padding: 5px;
+}
+
 
 @keyframes glowGradient {
     50% {box-shadow: 10px 5px 30px rgba(151, 255, 236, 0.297);}
 }
 
-@keyframes glowGradientBigBox {
-    25% {
-        box-shadow: 10px 5px 30px rgba(116, 213, 255, 0.1);
-    }
-}
 
 @keyframes gradient {
 	0% {
@@ -155,4 +189,3 @@ body {
 ul {
     list-style-type: none;
 }
-  

@@ -2,14 +2,34 @@ let currentUnit = {'unit':'celsius', 'unitSymbol':'°C', 'windUnit':'mph', 'time
 let data = null;
 searchAndUnits();
 
-function getForecastTime(epochTime, timezoneDifference, cityLocation, location) {
+function setWarmerColour() {
+    document.body.style.background = 'linear-gradient(-45deg, #c387ff, #ffb44b, #ff5892, #ff6135, #ffab8a)';
+}
+
+function setWarmesColour() {
+    document.body.style.background = 'linear-gradient(-45deg, #ff8f96, #ffa617, #ff763b, #fa61ff)';
+
+}
+
+function setCoolerColour() {
+    document.body.style.background = 'linear-gradient(-45deg, #318db5, #af19ff, #34b899, #3c91ff)';
+
+}
+
+function setCoolestColour() {
+    document.body.style.background = 'linear-gradient(-45deg, #2effc7, #3c91ff, #2a32d9, #8234ff)';
+
+}
+
+
+function getForecastTime(epochTime, timezoneDifference, cityLocation) {
     // 1717272494, 3600 -> 1717272494+3600
     // get location specific forecast time
     timeAccountedForTimezoneMilli = epochTime + timezoneDifference * 1000;
     currentTimeNew = new Date(timeAccountedForTimezoneMilli);
     cityLocation = capitalizeFirstLetter(cityLocation);
     [cityLocation] = cityLocation.split(',');
-    return timezoneDifference/3600 >=0 ? `Current Time in ${cityLocation}, ${location} is ${formatTime(currentTimeNew)} GMT+${timezoneDifference/3600}` : `Current Time in ${cityLocation}, ${location} is ${formatTime(currentTimeNew)} GMT${timezoneDifference/3600}`
+    return timezoneDifference/3600 >=0 ? `${formatTime(currentTimeNew)} GMT+${timezoneDifference/3600}` : `${formatTime(currentTimeNew)} GMT${timezoneDifference/3600}`
 }
 
 
@@ -133,6 +153,7 @@ async function fetchData(city) {
         city = capitalizeFirstLetter(city);
         // flask API
         const response = await fetch(`/api/weather/${city}`);
+
         console.log(response.error)
         if (city.includes(',')) {
             city = removeCharacter(city);
@@ -244,21 +265,22 @@ async function handleSearch() {
 
 
 function displayWeatherData(data, cityLocation) {
-    const localForecastTimeString = getForecastTime(Date.now(), data.timezone, cityLocation, data.country);
-    document.getElementById('timestamp').innerText = localForecastTimeString;
+    const localForecastTimeString = getForecastTime(Date.now(), data.timezone, cityLocation);
     [cityLocation] = cityLocation.split(',');
     document.getElementById('citySearch').value = capitalizeFirstLetter(cityLocation) + ", " + data.country;
     document.getElementById('weatherMiscBox').style.display = "block";
     switch(currentUnit['unit']) {
         case 'fahrenheit': {
+            document.getElementById('currentTime').innerText = `${localForecastTimeString}`
             document.getElementById('mainTemp').innerText = `${data.fahrenheit} ${currentUnit['unitSymbol']}`;
-            document.getElementById('cityWeatherDetails').textContent = `Feels Like ${data.feels_like_fahrenheit} ${currentUnit['unitSymbol']} ${capitalizeFirstLetter(data.description)}`
+            document.getElementById('cityWeatherDetails').innerText = `Feels Like ${data.feels_like_fahrenheit} ${currentUnit['unitSymbol']} ${capitalizeFirstLetter(data.description)}`
             document.getElementById('minTemp').innerText = 'Low: ' + data.minimum_temp_f + currentUnit['unitSymbol'];
             document.getElementById('maxTemp').innerText = 'High: ' + data.maximum_temp_f + currentUnit['unitSymbol'];
             break;  
         }
         default: {
-            document.getElementById('cityWeatherDetails').textContent = `Feels Like ${data.feels_like_celsius} ${currentUnit['unitSymbol']} - ${capitalizeFirstLetter(data.description)}`
+            document.getElementById('currentTime').innerText = `${localForecastTimeString}`
+            document.getElementById('cityWeatherDetails').innerText = `Feels Like ${data.feels_like_celsius} ${currentUnit['unitSymbol']} - ${capitalizeFirstLetter(data.description)}`
             document.getElementById('mainTemp').innerText = `${data.celsius} ${currentUnit['unitSymbol']}`;
             document.getElementById('minTemp').innerText = 'Low: ' + data.minimum_temp_c + currentUnit['unitSymbol'];
             document.getElementById('maxTemp').innerText = 'High: ' + data.maximum_temp_c + currentUnit['unitSymbol'];

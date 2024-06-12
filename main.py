@@ -10,6 +10,12 @@ def load_config(env='development'):
         config = yaml.safe_load(f)
     return config.get(env, config['default'])
 
+config = load_config('development')
+# define these within your config.yaml
+BASE_URL = config['BASE_URL']
+API_KEY = config['API_KEY']
+
+
 def k_to_c_f(k: float):
     c = k-273.15
     f = c * (9/5) + 32
@@ -91,9 +97,6 @@ def index():
     return render_template('index.html')
 
 
+
 if __name__ == "__main__":
-    config = load_config('development')
-    # define these within your config.yaml
-    BASE_URL = config['BASE_URL']
-    API_KEY = config['API_KEY']
     app.run(port=config['PORT'], debug=config['DEBUG'])
