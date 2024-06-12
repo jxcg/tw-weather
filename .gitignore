@@ -3,4 +3,3 @@ api_key
 config.yaml
 TODO.md
 __pycache__
-wsgi.py
