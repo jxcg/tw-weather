@@ -6,7 +6,6 @@ and normalises certain values provided by the endpoint (e.g., changing Kelvin to
 Author: Joshua Cameron Ng
 Last updated: 12/06/2024
 """
-
 import requests
 import math as m
 import yaml
