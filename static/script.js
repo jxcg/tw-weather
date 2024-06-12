@@ -1,3 +1,11 @@
+/**
+ * Filename: script.js
+ * Description: This script fetches data from a formatted endpoint, and inserts this data into a HTML template.
+ * @author: Joshua Cameron Ng
+ * Last updated: 12/06/2024
+**/
+
+
 let currentUnit = {'unit':'celsius', 'unitSymbol':'°C', 'windUnit':'mph', 'timeFormat':'24'};
 let data = null;
 searchAndUnits();
@@ -169,6 +177,7 @@ async function fetchData(city) {
         console.log(response)
         // response shows up when the user does not enter a city, throwing a 404 response
         if (!response.ok) {
+            document.getElementById('cityWeatherDetails').style.fontSize = '40px';
             document.getElementById('cityWeatherDetails').textContent = `Please enter a city`
             document.getElementById('mainTemp').innerText = '';
             document.getElementById('weatherIcon').style.display = "none";
@@ -180,8 +189,11 @@ async function fetchData(city) {
 
         // response shows up when the user enters a city, but it does not exist
         if ('Code' in data && 'Message' in data) {
+            document.getElementById('cityWeatherDetails').style.fontSize = '40px';
             document.getElementById('cityWeatherDetails').textContent = `Weather for: '${searchForm}' could not be found :(`
             document.getElementById('weatherIcon').style.display = "none";
+            document.getElementById('weatherMiscBox').style.display = "none";
+            document.getElementById('currentTime').style.display = "none";
             document.getElementById('mainTemp').innerText = "";
             console.log( { error: true, message: `API Error: ${data.Code} - ${data.Message}` });
             data = null;
@@ -189,6 +201,7 @@ async function fetchData(city) {
         }
         else {
             console.log(data);
+            document.getElementById('cityWeatherDetails').style.fontSize = '24px';
             document.getElementById('cityWeatherDetails').textContent = `${capitalizeFirstLetter(data.description)}`
             return data;
         }

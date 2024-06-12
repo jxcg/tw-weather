@@ -1,3 +1,12 @@
+"""
+Filename: main.py
+Description: This script fetches data from an API endpoint defined within a config yaml to its own endpoint,
+and normalises certain values provided by the endpoint (e.g., changing Kelvin to Celsius/Fahrenheit, etc.)
+
+Author: Joshua Cameron Ng
+Last updated: 12/06/2024
+"""
+
 import requests
 import math as m
 import yaml
