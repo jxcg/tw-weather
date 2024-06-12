@@ -3,22 +3,30 @@ let data = null;
 searchAndUnits();
 
 function setWarmerColour() {
-    document.body.style.background = 'linear-gradient(-45deg, #c387ff, #ffb44b, #ff5892, #ff6135, #ffab8a)';
+    document.body.style.background = 'linear-gradient(-45deg, #c387ff, #7B0EE6, #ff5892, #ff6135, #ffab8a)';
+    document.body.style.animation = 'gradient 25s ease infinite';
+    document.body.style.backgroundSize = '250% 250%';
+
 }
 
-function setWarmesColour() {
+function setWarmestColour() {
     document.body.style.background = 'linear-gradient(-45deg, #ff8f96, #ffa617, #ff763b, #fa61ff)';
+    document.body.style.animation = 'gradient 25s ease infinite';
+    document.body.style.backgroundSize = '250% 250%';
 
 }
 
 function setCoolerColour() {
     document.body.style.background = 'linear-gradient(-45deg, #318db5, #af19ff, #34b899, #3c91ff)';
+    document.body.style.animation = 'gradient 25s ease infinite';
+    document.body.style.backgroundSize = '250% 250%';
 
 }
 
 function setCoolestColour() {
     document.body.style.background = 'linear-gradient(-45deg, #2effc7, #3c91ff, #2a32d9, #8234ff)';
-
+    document.body.style.animation = 'gradient 25s ease infinite';
+    document.body.style.backgroundSize = '250% 250%';
 }
 
 
@@ -269,6 +277,7 @@ function displayWeatherData(data, cityLocation) {
     [cityLocation] = cityLocation.split(',');
     document.getElementById('citySearch').value = capitalizeFirstLetter(cityLocation) + ", " + data.country;
     document.getElementById('weatherMiscBox').style.display = "block";
+    const baselineTemperatureCelsius = 20;
     switch(currentUnit['unit']) {
         case 'fahrenheit': {
             document.getElementById('currentTime').innerText = `${localForecastTimeString}`
@@ -287,6 +296,29 @@ function displayWeatherData(data, cityLocation) {
             break;
         }
     }
+    const celsiusIntegerConversion = Number(data.celsius);
+    console.log(celsiusIntegerConversion)
+
+    if (celsiusIntegerConversion >=20 && celsiusIntegerConversion <30) {
+        console.log("warmer than 20, less than 30")
+        setWarmerColour();
+    }
+    else if (celsiusIntegerConversion >20) {
+        console.log("warmer than 20")
+        setWarmestColour();
+    }
+
+    else if (celsiusIntegerConversion < 20 && celsiusIntegerConversion >5) {
+        console.log("less than 20, warmer than 5")
+        setCoolerColour();
+    }
+    else {
+        console.log("default, colder than 5")
+        setCoolestColour();
+    }
+
+
+    
 
     switch (currentUnit['windUnit']) {
         case 'kph': {
