@@ -277,12 +277,11 @@ function displayWeatherData(data, cityLocation) {
     [cityLocation] = cityLocation.split(',');
     document.getElementById('citySearch').value = capitalizeFirstLetter(cityLocation) + ", " + data.country;
     document.getElementById('weatherMiscBox').style.display = "block";
-    const baselineTemperatureCelsius = 20;
     switch(currentUnit['unit']) {
         case 'fahrenheit': {
             document.getElementById('currentTime').innerText = `${localForecastTimeString}`
             document.getElementById('mainTemp').innerText = `${data.fahrenheit} ${currentUnit['unitSymbol']}`;
-            document.getElementById('cityWeatherDetails').innerText = `Feels Like ${data.feels_like_fahrenheit} ${currentUnit['unitSymbol']} ${capitalizeFirstLetter(data.description)}`
+            document.getElementById('cityWeatherDetails').innerText = `Feels Like ${data.feels_like_fahrenheit} ${currentUnit['unitSymbol']} - ${capitalizeFirstLetter(data.description)}`
             document.getElementById('minTemp').innerText = 'Low: ' + data.minimum_temp_f + currentUnit['unitSymbol'];
             document.getElementById('maxTemp').innerText = 'High: ' + data.maximum_temp_f + currentUnit['unitSymbol'];
             break;  
@@ -316,9 +315,6 @@ function displayWeatherData(data, cityLocation) {
         console.log("default, colder than 5")
         setCoolestColour();
     }
-
-
-    
 
     switch (currentUnit['windUnit']) {
         case 'kph': {
