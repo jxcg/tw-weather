@@ -22,6 +22,7 @@ input[type=text] {
     background: rgba(255, 255, 255, 0.152);
     color: #ffdcdcaa;
     animation: glowGradient 5s infinite;
+    transition: all 0.3s ease-out;
 
 }
 
@@ -32,7 +33,7 @@ input[type=text]:hover {
 }
 
 input[type=text]:focus {
-    color: #ffdcdcaa;
+    color: #ffc0c0aa;
     outline: none;
     width: 100%;
 }

@@ -2,7 +2,7 @@
  * Filename: script.js
  * Description: This script fetches data from a formatted endpoint, and inserts this data into a HTML template.
  * @author: Joshua Cameron Ng
- * Last updated: 12/06/2024
+ * Last updated: 14/06/2024
 **/
 
 
@@ -228,6 +228,17 @@ function removeCharacter(originalCityWithPlace) {
 }
 
 function searchAndUnits() {
+    document.getElementById('citySearch').addEventListener('mousedown', function() {
+        citySearch.style.width = '60%'
+        citySearch.style.border = '2px dotted #ffdcdc52';
+    })
+    document.getElementById('citySearch').addEventListener('mouseup', function() {
+        citySearch.style.width = '100%';
+        citySearch.style.border = '2px solid #ffdcdc52';
+
+    })
+    
+
     document.getElementById('changeUnit').addEventListener('click', toggleTempUnit);
     document.getElementById('changeSpeedUnit').addEventListener('click', toggleWindSpeedUnit);
     document.getElementById('changeTimeFormat').addEventListener('click', toggleTimeUnit)
