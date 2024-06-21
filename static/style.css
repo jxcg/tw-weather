@@ -8,12 +8,6 @@
     color: rgba(255, 255, 255, 0.253);
 }
 
-body {
-    max-height: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-
 input[type=text] {
     font-family: Noto Sans, Helvetica, sans-serif;
     font-size: larger;
@@ -156,10 +150,13 @@ hr {
 
 body {
 	background: linear-gradient(-45deg, #d4623f, #e73c7e, #23a6d5, #149b7b, #cc96ff, #3c2255);
-	background-size: 400% 400%;
+	background-size: 500% 500%;
 	animation: gradient 25s ease infinite;
 	height: 100vh;
-    overflow: hidden;
+    width: 100vh;
+    overflow-x: hidden;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 
@@ -200,7 +197,7 @@ ul {
 @media (max-width: 768px) {
 
     .userInput {
-      width: 90%;
+      width: 80%;
     }
   
     input[type=text] {
@@ -245,7 +242,7 @@ ul {
 
     #changeUnit:active, #changeSpeedUnit:active, #changeTimeFormat:active {
       width: 130px;
-      font-size: 12px;
+      font-size: small;
       font-weight: 400;
     }
 

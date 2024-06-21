@@ -13,28 +13,28 @@ searchAndUnits();
 function setWarmerColour() {
     document.body.style.background = 'linear-gradient(-45deg, #c387ff, #7B0EE6, #ff5892, #ff6135, #ffab8a)';
     document.body.style.animation = 'gradient 25s ease infinite';
-    document.body.style.backgroundSize = '250% 250%';
+    document.body.style.backgroundSize = '400% 400%';
 
 }
 
 function setWarmestColour() {
     document.body.style.background = 'linear-gradient(-45deg, #ff8f96, #ffa617, #ff763b, #fa61ff)';
     document.body.style.animation = 'gradient 25s ease infinite';
-    document.body.style.backgroundSize = '250% 250%';
+    document.body.style.backgroundSize = '400% 400%';
 
 }
 
 function setCoolerColour() {
     document.body.style.background = 'linear-gradient(-45deg, #318db5, #af19ff, #34b899, #3c91ff)';
     document.body.style.animation = 'gradient 25s ease infinite';
-    document.body.style.backgroundSize = '250% 250%';
+    document.body.style.backgroundSize = '400% 400%';
 
 }
 
 function setCoolestColour() {
     document.body.style.background = 'linear-gradient(-45deg, #2effc7, #3c91ff, #2a32d9, #8234ff)';
     document.body.style.animation = 'gradient 25s ease infinite';
-    document.body.style.backgroundSize = '250% 250%';
+    document.body.style.backgroundSize = '400% 400%';
 }
 
 
