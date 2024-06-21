@@ -239,7 +239,7 @@ ul {
     }
   
     #changeUnit, #changeSpeedUnit, #changeTimeFormat {
-      font-size: small;
+      font-size: x-small;
     }
 
     #changeUnit:active, #changeSpeedUnit:active, #changeTimeFormat:active {
