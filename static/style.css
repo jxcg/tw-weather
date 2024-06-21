@@ -8,6 +8,12 @@
     color: rgba(255, 255, 255, 0.253);
 }
 
+body {
+    max-height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
 input[type=text] {
     font-family: Noto Sans, Helvetica, sans-serif;
     font-size: larger;
@@ -189,3 +195,70 @@ body {
 ul {
     list-style-type: none;
 }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+
+    .userInput {
+      width: 90%;
+    }
+  
+    input[type=text] {
+      width: 80%;
+      font-size: medium;
+    }
+  
+    input[type=text]:focus {
+      width: 85%;      
+    }
+  
+    #weatherMiscBox {
+      width: 80%;
+    }
+  
+    #mainTemp {
+      width: 90%;
+      font-size: 48px;
+    }
+  
+    #cityWeatherDetails {
+      font-size: large;
+    }
+  
+    #currentTime {
+      font-size: large;
+    }
+  
+    #minTemp, #maxTemp, #sunrise, #sunset {
+      width: 45%;
+      font-size: medium;
+    }
+  
+    #weatherWindSpeed, #pressure {
+      width: 90%;
+      font-size: medium;
+    }
+  
+    #changeUnit, #changeSpeedUnit, #changeTimeFormat {
+      font-size: small;
+    }
+
+    #changeUnit:active, #changeSpeedUnit:active, #changeTimeFormat:active {
+      width: 130px;
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    #footer {
+        margin: auto;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+    }
+  }
+  

@@ -201,7 +201,16 @@ async function fetchData(city) {
         }
         else {
             console.log(data);
-            document.getElementById('cityWeatherDetails').style.fontSize = '24px';
+            const deviceWidth = document.documentElement.clientWidth;
+
+            if (deviceWidth < 768) {
+                document.getElementById('cityWeatherDetails').style.fontSize = '18px';
+            }
+            else {
+                document.getElementById('cityWeatherDetails').style.fontSize = '24px';
+
+            }
+
             document.getElementById('cityWeatherDetails').textContent = `${capitalizeFirstLetter(data.description)}`
             return data;
         }
