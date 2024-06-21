@@ -120,7 +120,7 @@ function toggleTempUnit() {
         const city = data.name;
         displayWeatherData(data, city);
     }
-    document.getElementById('changeUnit').innerText = 'Current Unit: ' + currentUnit['unitSymbol'];
+    document.getElementById('changeUnit').innerText = currentUnit['unitSymbol'];
 }
 
 function toggleTimeUnit() {
@@ -138,7 +138,7 @@ function toggleTimeUnit() {
         const city = data.name;
         displayWeatherData(data,city);
     }
-    document.getElementById('changeTimeFormat').innerText = `Format: ${currentUnit['timeFormat']} Hour`;
+    document.getElementById('changeTimeFormat').innerText = `${currentUnit['timeFormat']} Hour`;
 }
 
 // toggle speeds
@@ -158,7 +158,7 @@ function toggleWindSpeedUnit() {
         const city = data.name;
         displayWeatherData(data, city);
     }
-    document.getElementById('changeSpeedUnit').innerText = 'Speed: ' + currentUnit['windUnit'];
+    document.getElementById('changeSpeedUnit').innerText = currentUnit['windUnit'];
 }
 
 async function fetchData(city) {
@@ -204,7 +204,7 @@ async function fetchData(city) {
             const deviceWidth = document.documentElement.clientWidth;
 
             if (deviceWidth < 768) {
-                document.getElementById('cityWeatherDetails').style.fontSize = '18px';
+                document.getElementById('cityWeatherDetails').style.fontSize = '16px';
             }
             else {
                 document.getElementById('cityWeatherDetails').style.fontSize = '24px';
